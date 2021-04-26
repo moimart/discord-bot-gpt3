@@ -1,0 +1,35 @@
+2021-04-15 11:51:09,774 - openai_logger - WARNING - Answer failed with error: 
+2021-04-15 11:51:44,012 - openai_logger - WARNING - Answer failed with error: 
+2021-04-15 11:52:49,488 - openai_logger - WARNING - Completion failed with error: 
+2021-04-15 11:54:14,470 - openai_logger - WARNING - Answer failed with error: 
+2021-04-15 11:56:24,718 - openai_logger - WARNING - Completion failed with error: 
+2021-04-15 12:52:47,477 - openai_logger - WARNING - Answer failed with error: 'str' object is not callable
+2021-04-15 16:25:42,075 - openai_logger - WARNING - Ad failed with error: Replacement index 1 out of range for positional args tuple
+2021-04-15 16:26:42,477 - openai_logger - WARNING - Ad failed with error: Replacement index 1 out of range for positional args tuple
+2021-04-15 16:57:49,085 - openai_logger - WARNING - Ad failed with error: 'tuple' object has no attribute 'split'
+2021-04-15 16:58:37,242 - openai_logger - WARNING - Ad failed with error: 'tuple' object has no attribute 'split'
+2021-04-15 17:33:26,362 - openai_logger - WARNING - Ad failed with error: Replacement index 2 out of range for positional args tuple
+2021-04-15 17:35:30,316 - openai_logger - WARNING - Ad failed with error: list index out of range
+2021-04-15 17:47:58,902 - openai_logger - WARNING - Ad failed with error: list index out of range
+2021-04-15 18:01:08,873 - openai_logger - WARNING - Ad failed with error: list index out of range
+2021-04-15 18:01:17,334 - openai_logger - WARNING - Ad failed with error: list index out of range
+2021-04-15 18:16:17,614 - openai_logger - WARNING - Product names failed with error: 'data'
+2021-04-16 07:07:05,758 - openai_logger - WARNING - Product names failed with error: 
+2021-04-16 07:25:36,471 - openai_logger - WARNING - TLDR failed with error: name 'items' is not defined
+2021-04-16 11:16:33,286 - openai_logger - WARNING - Recipes names failed with error: Replacement index 1 out of range for positional args tuple
+2021-04-16 16:07:10,684 - openai_logger - WARNING - Recipes names failed with error: 'trump'
+2021-04-16 16:08:03,292 - openai_logger - WARNING - Recipes names failed with error: 'trump'
+2021-04-16 16:08:57,829 - openai_logger - WARNING - Trump failed with error: 
+2021-04-16 16:11:48,986 - openai_logger - WARNING - Trump failed with error: 
+2021-04-16 16:19:52,176 - openai_logger - WARNING - Trump failed with error: 
+2021-04-17 13:57:54,885 - openai_logger - WARNING - Answer failed with error: name 'temperature' is not defined
+2021-04-17 14:21:33,750 - openai_logger - WARNING - Answer failed with error: name 'temperature' is not defined
+2021-04-17 21:19:01,659 - openai_logger - WARNING - Sing failed with error: name 'user_name' is not defined
+2021-04-18 12:25:57,738 - openai_logger - WARNING - trumpy failed with error: 
+2021-04-18 12:27:36,525 - openai_logger - WARNING - trumpy failed with error: 
+2021-04-18 12:28:52,706 - openai_logger - WARNING - trumpy failed with error: 
+2021-04-18 12:29:43,930 - openai_logger - WARNING - trumpy failed with error: 
+2021-04-18 12:31:52,120 - openai_logger - WARNING - trumpy failed with error: 
+2021-04-24 09:01:33,038 - openai_logger - WARNING - Product names failed with error: name 'parse_products' is not defined
+2021-04-24 09:11:04,411 - openai_logger - WARNING - Product names failed with error: name 'parse_products' is not defined
+2021-04-24 09:11:56,407 - openai_logger - WARNING - Product names failed with error: name 'parse_products' is not defined

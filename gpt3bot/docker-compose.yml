@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+
+  bot-server:
+    build: .
+    restart: always
+    env_file: ../discord-bot/.env
+    volumes:
+      - ../discord-bot:/bot-server
