@@ -318,7 +318,7 @@ class ApiHandler:
             params = {
                 "prompt": scaffold,
                 "max_tokens": 120,
-                "temperature": 1,
+                "temperature": 0.8,
                 "top_p": 1,
                 "n": 1,
                 "stream": False,

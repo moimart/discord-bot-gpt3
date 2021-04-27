@@ -153,5 +153,7 @@ Thumbs.db
 # profiling data
 .prof
 
+# pictures
+.jpg
 
 # End of https://www.toptal.com/developers/gitignore/api/python,dotenv

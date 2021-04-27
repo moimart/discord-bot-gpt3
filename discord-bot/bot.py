@@ -1,10 +1,12 @@
 import logger
+import inspect
 import discord
 from openai_api import ApiHandler
+from profile_pic import ProfilePic
 from functools import wraps
 from Prompts import language_map
 from discord.ext import commands
-from config import DISCORD_TOKEN, MONGO_URI, MONGO_DBNAME, PREFIX, OPENAI_TOKEN, PASSCODE
+from config import DISCORD_TOKEN, MONGO_URI, MONGO_DBNAME, PREFIX, OPENAI_TOKEN, PASSCODE, NICKNAMES, MAGIC_SECRET
 from helpers import user_parse, help_message
 from Errors import *
 import aiohttp
@@ -26,14 +28,25 @@ def check_auth(method):
 
     return _impl
 
+def personality(method):
+    @wraps(method)
+    async def _impl(self, *method_args, **method_kwargs):
+        self.personality = method.__name__
+        method_output = method(self, *method_args, **method_kwargs)
+        return await method_output
+
+    return _impl
+
 class GPTBot(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot): 
         self.bot = bot
         self.__logger = logger.get_logger("openai_logger")
         self.__api = ApiHandler(self.__logger)
+        self.pics = ProfilePic(NICKNAMES)
+        self.personality = "normal"
         self.language = "EN"
         self.authorized = False
-        self.passcode = "{}".format(PASSCODE)
+        self.passcode = "{}".format(PASSCODE)   
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -73,6 +86,20 @@ class GPTBot(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         guild_id = guild.id
+
+    @commands.Cog.listener("on_message")
+    async def greet(self,message):
+        for x in message.mentions:
+            if(x==self.bot.user):
+                try:
+                    if (self.personality == "normal"):
+                        answer = await self.__api.answer(message.clean_content, language=self.language)
+                        return await message.channel.send(discord.utils.escape_mentions(answer))
+                    else:
+                        answer = await self.__api.personality(message.clean_content,self.personality,language="EN")
+                        return await message.channel.send(discord.utils.escape_mentions(answer))
+                except Exception as e:
+                    print("Error: {}".format(e))
 
     async def cog_before_invoke(self, ctx):
         await ctx.message.add_reaction(thumbs_up)
@@ -115,6 +142,7 @@ class GPTBot(commands.Cog):
     @commands.command()
     @check_auth
     async def answer(self, ctx, *prompt: str):
+        self.personality = "normal"
         usage = len(list("".join(prompt)))
         user_id, user_name = user_parse(ctx)
         if usage == 0:
@@ -241,65 +269,46 @@ class GPTBot(commands.Cog):
         answer = await self.__api.recipe(prompt, language=self.language)
         return await ctx.send(discord.utils.escape_mentions(answer))
 
+    async def person_talks(self, ctx, *prompt: str):
+        await ctx.send("I'm gonna be talking as {} from now on".format(self.personality))
+        answer = await self.__api.personality(prompt, self.personality, language=self.language)
+        return await ctx.send(discord.utils.escape_mentions(answer))
+
     @commands.command()
     @check_auth
+    @personality
     async def hood(self, ctx, *prompt: str):
-        user_id, user_name = user_parse(ctx)
-        usage = len(list("".join(prompt)))
-        if usage == 0:
-            raise EmptyPromptError
-        answer = await self.__api.personality(prompt, "hood", language=self.language)
-        return await ctx.send(discord.utils.escape_mentions(answer))
-
+        await self.person_talks(ctx,prompt) 
+        
     @commands.command()
     @check_auth
+    @personality
     async def trump(self, ctx, *prompt: str):
-        user_id, user_name = user_parse(ctx)
-        usage = len(list("".join(prompt)))
-        if usage == 0:
-            raise EmptyPromptError
-        answer = await self.__api.personality(prompt, "trump", language=self.language)
-        return await ctx.send(discord.utils.escape_mentions(answer))
+        await self.person_talks(ctx,prompt)
 
     @commands.command()
     @check_auth
+    @personality
     async def trumpy(self, ctx, *prompt: str):
-        user_id, user_name = user_parse(ctx)
-        usage = len(list("".join(prompt)))
-        if usage == 0:
-            raise EmptyPromptError
-        answer = await self.__api.personality(prompt, "trumpy", language=self.language, stops=['Bush:'])
-        return await ctx.send(discord.utils.escape_mentions(answer))
+        await self.person_talks(ctx,prompt)
 
     @commands.command()
     @check_auth
+    @personality
     async def pedantic(self, ctx, *prompt: str):
-        user_id, user_name = user_parse(ctx)
-        usage = len(list("".join(prompt)))
-        if usage == 0:
-            raise EmptyPromptError
-        answer = await self.__api.personality(prompt, "pedantic", language=self.language)
-        return await ctx.send(discord.utils.escape_mentions(answer))
+        await self.person_talks(ctx,prompt)
     
     @commands.command()
     @check_auth
+    @personality
     async def qanon(self, ctx, *prompt: str):
-        user_id, user_name = user_parse(ctx)
-        usage = len(list("".join(prompt)))
-        if usage == 0:
-            raise EmptyPromptError
-        answer = await self.__api.personality(prompt, "qanon", language=self.language)
-        return await ctx.send(discord.utils.escape_mentions(answer))
+        await self.person_talks(ctx,prompt)
 
     @commands.command()
     @check_auth
+    @personality
     async def woke(self, ctx, *prompt: str):
-        user_id, user_name = user_parse(ctx)
-        usage = len(list("".join(prompt)))
-        if usage == 0:
-            raise EmptyPromptError
-        answer = await self.__api.personality(prompt, "woke", language=self.language)
-        return await ctx.send(discord.utils.escape_mentions(answer))
+        await self.person_talks(ctx,prompt)
 
     @commands.command()
     @check_auth
@@ -373,6 +382,15 @@ class GPTBot(commands.Cog):
                 else:
                     await ctx.send(r.status)
 
+    @commands.command()
+    @check_auth
+    async def change(self, ctx, *prompt: str):
+        if "".join(prompt) == "{}".format(MAGIC_SECRET):
+            await self.pics.change_picture(self.personality,self.bot)
+            await ctx.send("Changing myself")
+        else:
+            await ctx.send("You can't do that")
+        
     @commands.command()
     @check_auth
     async def trump_says(self, ctx, *prompt: str):
