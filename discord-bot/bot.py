@@ -6,7 +6,7 @@ from profile_pic import ProfilePic
 from functools import wraps
 from Prompts import language_map
 from discord.ext import commands
-from config import DISCORD_TOKEN, MONGO_URI, MONGO_DBNAME, PREFIX, OPENAI_TOKEN, PASSCODE, NICKNAMES, MAGIC_SECRET
+from config import DISCORD_TOKEN, PREFIX, OPENAI_TOKEN, PASSCODE, NICKNAMES, MAGIC_SECRET
 from helpers import user_parse, help_message
 from Errors import *
 import aiohttp
