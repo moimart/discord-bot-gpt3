@@ -23,7 +23,7 @@ language_map = {
         "trumpy": trumpy_en,
         "woke": woke_en,
         "pedantic": pedantic_en,
-        "qanon": qanon_en
+        "qanon": qanon_en,
         "bain": bain_en
     }
 }
