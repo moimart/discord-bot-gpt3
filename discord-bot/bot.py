@@ -312,6 +312,12 @@ class GPTBot(commands.Cog):
 
     @commands.command()
     @check_auth
+    @personality
+    async def bain(self, ctx, *prompt: str):
+        await self.person_talks(ctx,prompt)
+
+    @commands.command()
+    @check_auth
     async def tldr(self, ctx, *prompt: str):
         user_id, user_name = user_parse(ctx)
         usage = len(list("".join(prompt)))

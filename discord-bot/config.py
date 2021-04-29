@@ -19,5 +19,6 @@ NICKNAMES = {
     'qanon' : 'Q Shaman',
     'hood' : 'Jay ZZZ',
     'woke' : 'Wokeness',
-    'pedantic' : 'Charles'
+    'pedantic' : 'Charles',
+    'bain' : 'Joe Mitchells'
 }

@@ -24,5 +24,6 @@ language_map = {
         "woke": woke_en,
         "pedantic": pedantic_en,
         "qanon": qanon_en
+        "bain": bain_en
     }
 }
